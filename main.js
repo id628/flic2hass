@@ -1,6 +1,11 @@
+//GITHUB URL: https://github.com/id628/flic2hass
+
+//CONFIGURATION - UPDATE AS NEEDED
 var server = "mqtt.home";
 var hatopic = "homeassistant";
 var flictopic = "flic";
+
+//CODE STARTS HERE. OPEN SOURCE LICENSE, USE OR CHANGE AS NEEDED
 
 var buttonManager = require("buttons");
 
