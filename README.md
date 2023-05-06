@@ -17,7 +17,13 @@ Basic steps:
 * Create a new module, name it MQTT
 * Paste in the main.js and mqtt.js files
 * Update the main.js variables server and hatopic.
-* IF you use a username/password on your MQTT, set that up
+* IF you use a username/password on your MQTT, set that up:
+> in main.js
+>> var username = 'flichub';
+>> var password = 'xxxxx';
+> and change this line....
+>> var mqtt = require("./mqtt").create(server,{'username':username,'password':password});
+
 * Start the "Module" in the IDE and watch the Console output - it'se extremely verbose right now
 
 * IF it started right, set the "restart after crash" checkbox just in case
