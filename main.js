@@ -102,7 +102,7 @@ buttonManager.on("buttonSingleOrDoubleClickOrHold", function(obj) {
 	mqtt.publish(btntopic + "/action", clickType);
 	console.log(btntopic+"/action:   \t"+clickType);
 	mqtt.publish(btntopic + "/action", "ok");
-	mqtt.publish(btntopic + "/battery", button.batteryStatus+"%");
+	mqtt.publish(btntopic + "/battery", button.batteryStatus+""); //NOW it seems to just want text, no decoration!
 	console.log(btntopic+"/battery:  \t"+button.batteryStatus);
 });
 
