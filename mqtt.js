@@ -577,3 +577,14 @@ exports.connect = function (options) {
   mqtt.connect();
   return mqtt;
 };
+
+
+// Added by heroash88:
+MQTT.on('disconnected', function() {
+	mqtt.connect();
+});
+MQTT.on('error', function() {
+  setTimeout(function (){
+    mqtt.connect();
+  }, 1000);
+});
