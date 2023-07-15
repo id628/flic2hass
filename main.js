@@ -182,4 +182,17 @@ mqtt.on('connected', function(){
 	register_allbuttons();
 });
 
+// Added by heroash88 to reconnect if MQTT server goes down
+mqtt.on('disconnected', function() {
+	mqtt.connect();
+});
+
+mqtt.on('error', function() {
+  setTimeout(function (){
+    mqtt.connect();
+  }, 1000);
+});
+
+
+
 mqtt.connect();
