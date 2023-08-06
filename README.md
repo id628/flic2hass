@@ -1,31 +1,55 @@
 # flic2hass
-A Flic SDK utility to publish all Flic buttons to Home Assistant via MQTT
-
-Utilizing https://hubsdk.flic.io/static/tutorial/
-
-Your Flic Hub online IDE: https://hubsdk.flic.io/
-
-Follow the tutorial steps above, substituting in main.js -- DON'T FORGET TO UPDATE IT TO USE YOUR OWN MQTT SERVER!
+## A Flic SDK utility to publish all of your Flic buttons to Home Assistant via MQTT
 
 Requirements:
-* Flic Hub
-* Working MQTT system
-* Enough know-how to get it to work - you will need to also follow the tutorial a bit (linked above)
+* A Flic Hub
+* A functional MQTT server
+## Basic Steps:
 
-Basic steps:
-* Connect to your Flic Hub IDE
-* Create a new module, name it MQTT
-* Paste in the main.js and mqtt.js files
-* Update the main.js variables server and hatopic.
-* IF you use a username/password on your MQTT, set that up:
-> in main.js
->> var username = 'flichub';
->> var password = 'xxxxx';
-> and change this line....
->> var mqtt = require("./mqtt").create(server,{'username':username,'password':password});
+**1. Connect to Flic Hub IDE:**
 
-* Start the "Module" in the IDE and watch the Console output - it'se extremely verbose right now
+* Follow along with the beginning of [these instructions](https://hubsdk.flic.io/static/tutorial/) to enable SDK access.
+* Go to: <https://hubsdk.flic.io/> and login, your hub should be discovered automatically.
 
-* IF it started right, set the "restart after crash" checkbox just in case
+**2. Create `MQTT` module:**
 
-* IF it didn't start, try powercycling your Flic Hub and reconnect. Verify the Module saved properly and is running.
+* One in the Web IDE, click "Create Module".
+* Give the new module a name. "`MQTT`" is a good option but anything will work.
+
+**3. Insert `main.js` and `mqtt.js`:**
+
+* Copy content from `main.js` in this repo to main.js in the flic IDE.
+* Right click the folder in the left pane and select "New File".
+* Name the file `mqtt.js` (IT MUST BE NAMED THIS).
+* Copy content from `mqtt.js` in this repo to mqtt.js in the flic IDE.
+
+**4. Update variables in `main.js`:**
+
+* Modify `server`, `hatopic`, `authentication` with your details.
+
+   *If your MQTT server does not require authentication:*
+
+* Delete:
+
+     ```javascript
+     var username = 'flichub';
+     var password = 'xxxxx';
+     ```
+
+* Replace:
+
+     ```javascript
+     var mqtt = require("./mqtt").create(server,{'username':username,'password':password});
+     ```
+
+     With:
+
+     ```javascript
+     var mqtt = require("./mqtt").create(server);
+     ```
+
+1. Start the module in the IDE by clicking the green play button, and watch the Console output (it's extremely verbose right now)
+   
+   *If the module didn't start correctly, try powercycling your Flic Hub and reconnect. Verify the Module saved properly and is running.*
+
+2. Once the module has started and you have verified it is working as expected, turn on the "restart after crash" checkbox to ensure the module is always running after any unexpected crash or hub power cycle.
