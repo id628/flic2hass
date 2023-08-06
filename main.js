@@ -1,7 +1,9 @@
 var server = "mqtt.home";
 var hatopic = "homeassistant";
 var flictopic = "flic";
-var mqtt = require("./mqtt").create(server);
+var username = "";
+var password = "";
+var mqtt = require("./mqtt").create(server,{'username':username,'password':password});
 
 var buttonManager = require("buttons");
 var myButtons = {}; //Dictionary of Button objects
