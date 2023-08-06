@@ -182,6 +182,7 @@ function register_button(button) {
     obj.state_topic = buttontopic + "/battery";
     obj.unique_id = "Flic_" + button.serialNumber + "_battery";
     obj.device_class = "battery";
+	obj.entity_category = "diagnostic";
     //obj.unit_of_measurement = "%"; //It doesn't seem to actually like this.
 
     payload = JSON.stringify(obj, null, 4);
