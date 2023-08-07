@@ -1,11 +1,11 @@
 var server = "mqtt.home";
 var hatopic = "homeassistant";
 var flictopic = "flic";
+var username = "";
+var password = "";
+var mqtt = require("./mqtt").create(server,{'username':username,'password':password});
 
 var buttonManager = require("buttons");
-
-var mqtt = require("./mqtt").create(server);
-
 var myButtons = {}; //Dictionary of Button objects
 
 //This runs when a button is added via Flic's interface
@@ -86,7 +86,7 @@ buttonManager.on("buttonSingleOrDoubleClickOrHold", function(obj) {
 	
 	var clickType = obj.isSingleClick ? "click" : obj.isDoubleClick ? "double_click" : "hold";
 	var sn = button.serialNumber;
-	
+
 	if (!myButtons[button.bdaddr]) {
 		console.log("**** Found an unregistered button. It must be new! ***")
 		register_button(button);
@@ -105,6 +105,25 @@ buttonManager.on("buttonSingleOrDoubleClickOrHold", function(obj) {
 	mqtt.publish(btntopic + "/battery", button.batteryStatus+""); //NOW it seems to just want text, no decoration!
 	console.log(btntopic+"/battery:  \t"+button.batteryStatus);
 });
+
+buttonManager.on("buttonUp", function(obj) {
+    var button = buttonManager.getButton(obj.bdaddr);
+    console.log("\nButton Released! " + button.serialNumber + " " + button.name);
+    publishButtonState(button, "released");
+});
+
+buttonManager.on("buttonDown", function(obj) {
+    var button = buttonManager.getButton(obj.bdaddr);
+    console.log("\nButton Pressed! " + button.serialNumber + " " + button.name);
+    publishButtonState(button, "pressed");
+});
+
+function publishButtonState(button, state) {
+    var sn = button.serialNumber;
+    var statetopic = flictopic + "/" + sn + "/state";
+    mqtt.publish(statetopic, state);
+    console.log(statetopic + ":   \t" + state);
+}
 
 function register_button(button) {
     //Register one button
@@ -137,7 +156,7 @@ function register_button(button) {
     };
 
     //Setup config and destination for button press
-    obj.name = button.name + " Flic Button";
+    obj.name = button.name + " Button Action";
     obj.state_topic = buttontopic + "/action";
     obj.unique_id = "Flic_" + button.serialNumber + "_action";
 
@@ -147,11 +166,23 @@ function register_button(button) {
         retain: true
     });
 
+	// Setup config and destination for button state
+	obj.name = button.name + " Button State";
+	obj.state_topic = buttontopic + "/state";
+	obj.unique_id = "Flic_" + button.serialNumber + "_state";
+
+	payload = JSON.stringify(obj, null, 4);
+	console.log(configtopic + "/state/config:\t" + payload);
+	mqtt.publish(configtopic + "/state/config", payload, {
+		retain: true
+	});
+
     //Setup config and destination for battery level report
-    obj.name = button.name + " Flic Button Battery Level";
+    obj.name = button.name + " Battery Level";
     obj.state_topic = buttontopic + "/battery";
     obj.unique_id = "Flic_" + button.serialNumber + "_battery";
     obj.device_class = "battery";
+	obj.entity_category = "diagnostic";
     //obj.unit_of_measurement = "%"; //It doesn't seem to actually like this.
 
     payload = JSON.stringify(obj, null, 4);
