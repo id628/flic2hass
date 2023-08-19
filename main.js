@@ -218,12 +218,10 @@ mqtt.on('disconnected', function() {
 	mqtt.connect();
 });
 
-mqtt.on('error', function() {
-  setTimeout(function (){
-    mqtt.connect();
-  }, 1000);
+mqtt.on('error', function () {
+	setTimeout(function () {
+		throw new Error("Crashed")
+	}, 1000);
 });
-
-
 
 mqtt.connect();
