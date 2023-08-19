@@ -210,15 +210,18 @@ function register_allbuttons(){
 //This runs on startup, it performs the actual "discovery" announcement for 
 //HomeAssistant to add the device to its inventory
 mqtt.on('connected', function(){
+	console.log("\n'Connected' event\n");
 	register_allbuttons();
 });
 
 // Added by heroash88 to reconnect if MQTT server goes down
 mqtt.on('disconnected', function() {
+	console.log("\n'Disconnected' event\n");
 	mqtt.connect();
 });
 
 mqtt.on('error', function () {
+	console.log("\n'Error' event\n");
 	setTimeout(function () {
 		throw new Error("Crashed")
 	}, 1000);
