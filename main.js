@@ -156,7 +156,7 @@ function register_button(button) {
     };
 
     //Setup config and destination for button press
-    obj.name = button.name + " Button Action";
+    obj.name = "Button Action";
     obj.state_topic = buttontopic + "/action";
     obj.unique_id = "Flic_" + button.serialNumber + "_action";
 
@@ -167,7 +167,7 @@ function register_button(button) {
     });
 
 	// Setup config and destination for button state
-	obj.name = button.name + " Button State";
+	obj.name = "Button State";
 	obj.state_topic = buttontopic + "/state";
 	obj.unique_id = "Flic_" + button.serialNumber + "_state";
 
@@ -178,7 +178,7 @@ function register_button(button) {
 	});
 
     //Setup config and destination for battery level report
-    obj.name = button.name + " Battery Level";
+    obj.name = "Battery Level";
     obj.state_topic = buttontopic + "/battery";
     obj.unique_id = "Flic_" + button.serialNumber + "_battery";
     obj.device_class = "battery";
@@ -210,20 +210,21 @@ function register_allbuttons(){
 //This runs on startup, it performs the actual "discovery" announcement for 
 //HomeAssistant to add the device to its inventory
 mqtt.on('connected', function(){
+	console.log("\n'Connected' event\n");
 	register_allbuttons();
 });
 
 // Added by heroash88 to reconnect if MQTT server goes down
 mqtt.on('disconnected', function() {
+	console.log("\n'Disconnected' event\n");
 	mqtt.connect();
 });
 
-mqtt.on('error', function() {
-  setTimeout(function (){
-    mqtt.connect();
-  }, 1000);
+mqtt.on('error', function () {
+	console.log("\n'Error' event\n");
+	setTimeout(function () {
+		throw new Error("Crashed")
+	}, 1000);
 });
-
-
 
 mqtt.connect();
