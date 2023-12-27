@@ -19,37 +19,30 @@ Requirements:
 **3. Insert `main.js` and `mqtt.js`:**
 
 * Copy content from `main.js` in this repo to main.js in the flic IDE.
-* Right click the folder in the left pane and select "New File".
+* Right-click the folder in the left pane and select "New File".
 * Name the file `mqtt.js` (IT MUST BE NAMED THIS).
 * Copy content from `mqtt.js` in this repo to mqtt.js in the flic IDE.
 
 **4. Update variables in `main.js`:**
 
-* Modify `server`, `hatopic`, `authentication` with your details.
+* Modify `server` `server_options`, `hatopic` with your details. 
+  Uncomment `username` and `password` if MQTT server requires authentication.
+  If server runs on the non-standard port, update the `port` details.
+  ```javascript
+  var server = "domain_or_ip_address";
+  var server_options = {
+      //"username": "",
+      //"password": "",
+      "port": 1883,
+  }
+  var hatopic = "homeassistant";
+  ```
+  Refer to [flic-hub-sdk-mqtt-js](https://github.com/50ButtonsEach/flic-hub-sdk-mqtt-js#setting-up-and-connecting) 
+  documentation for the list of available options.
 
-   *If your MQTT server does not require authentication:*
+**5. Run Module**
+  * Start the module in the IDE by clicking the green play button, and watch the Console output (it's extremely verbose right now)
+    
+    *If the module didn't start correctly, try powercycling your Flic Hub and reconnect. Verify the Module saved properly and is running.*
 
-* Delete:
-
-     ```javascript
-     var username = 'flichub';
-     var password = 'xxxxx';
-     ```
-
-* Replace:
-
-     ```javascript
-     var mqtt = require("./mqtt").create(server,{'username':username,'password':password});
-     ```
-
-     With:
-
-     ```javascript
-     var mqtt = require("./mqtt").create(server);
-     ```
-
-1. Start the module in the IDE by clicking the green play button, and watch the Console output (it's extremely verbose right now)
-   
-   *If the module didn't start correctly, try powercycling your Flic Hub and reconnect. Verify the Module saved properly and is running.*
-
-2. Once the module has started and you have verified it is working as expected, turn on the "restart after crash" checkbox to ensure the module is always running after any unexpected crash or hub power cycle.
+  * Once the module has started, and you have verified it is working as expected, turn on the "restart after crash" checkbox to ensure the module is always running after any unexpected crash or hub power cycle.
