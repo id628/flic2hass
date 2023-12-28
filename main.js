@@ -6,8 +6,6 @@ var server_options = {
 }
 var hatopic = "homeassistant";
 var flictopic = "flic";
-var username = "";
-var password = "";
 var mqtt = require("./mqtt").create(server, server_options);
 
 var buttonManager = require("buttons");
