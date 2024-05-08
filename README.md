@@ -1,3 +1,13 @@
+If this doesn't work for you, please try this fork, reports are that 
+it works with the latest updates from both Flic and Home Assistant.
+
+THIS version is not currently maintained anymore.
+I'm happy that someone else has taken the reigns!
+
+Fork: https://github.com/asosnovsky/flic2hass
+
+
+
 # flic2hass
 ## A Flic SDK utility to publish all of your Flic buttons to Home Assistant via MQTT
 
