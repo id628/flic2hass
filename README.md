@@ -1,10 +1,24 @@
+# THIS version is not currently maintained anymore. I'm happy that someone else has taken the reigns!
+
+# NOTES - READ THIS FIRST
+This tool is no longer supported and may not work for you. It was meant as a starting-off place 
+to allow others to build upon to make it better.
+
+## Better/newer tools:
+
+**1. This one is my personal favorite right this moment: https://github.com/JohNan/home-assistant-flichub**
+It's a HACS integration that does all the logic where it should be, in Home Assistant, rather than in the
+somewhat flaky Flic Hub.
+
+**2.
 If this doesn't work for you, please try this fork, reports are that 
-it works with the latest updates from both Flic and Home Assistant.
-
-THIS version is not currently maintained anymore.
-I'm happy that someone else has taken the reigns!
-
+it works with the latest updates from both Flic and Home Assistant.**
 Fork: https://github.com/asosnovsky/flic2hass
+
+# OLD CODE and instructions below
+
+
+
 
 
 
